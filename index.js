@@ -1,3 +1,8 @@
+//ws://127.0.0.1:52300/socket.io/?EIO=4&transport=websocket
+//ws://tutorialgameservernode.herokuapp.com:80/socket.io/?EIO=4&transport=websocket
+
+
+
 let io = require('socket.io')(process.env.PORT || 52300);
 let Server = require('./Classes/Server')
 
@@ -15,23 +20,3 @@ io.on('connection', function(socket){
     connection.createEvents();
     connection.socket.emit('register', {'id': connection.player.id});
 });
-
-
-function interval(func, wait, times){
-    var interv = function(w, t){
-        return function(){
-            if(typeof t === "undefined" || t-- > 0){
-                setTimeout(interv, w);
-                try{
-                    func.call(null);
-                } catch(e){
-                    t = 0;
-                    throw e.toString();
-                }
-            }
-
-        };
-    }(wait, times);
-
-    setTimeout(interv, wait);
-}
